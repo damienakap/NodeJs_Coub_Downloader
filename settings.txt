@@ -1,0 +1,14 @@
+Mode
+0
+MaxLoops
+30
+OverrideMaxLoops
+false
+DownloadFolder
+./downloads
+TempFolder
+./tmp
+ffmpegPath
+./ffmpeg.exe
+ffprobePath
+./ffprobe.exe
