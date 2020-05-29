@@ -12,6 +12,7 @@ Depdancies:</br>
  <li>ffprobe-static</li>
  </br>
  Downloads:
+ <li>NodeJs</li>
  <li>ffprobe.exe</li>
  <li>fmpeg.exe</li>
 </ul>
