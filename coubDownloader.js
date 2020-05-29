@@ -1,7 +1,10 @@
 
 
 /*
-Demdancies:
+Email: damienakap@gmail.com
+last updated: 05/29/2020
+
+Depdancies:
     Nodejs (npm):
         jquery
         https
@@ -173,7 +176,7 @@ async function processCoubVideo(json, videoLink, audioLink)
         console.log("...Removed Raw Video File...");
 
         // remove looped video
-        tempPath = tmpFolder+'/'+ outputVideoName + videoExtention;
+        tempPath = tmpFolder+'/tmp_'+ outputVideoName + videoExtention;
         if(fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
         console.log("...Removed Looped Video File...");
 
@@ -268,17 +271,17 @@ async function attatchAudio(outputFileName, audioFileName, duration)
     console.log(" ");
     try {
         return new Promise(function(resolve, reject) {
-            new fluent_ffmpeg(tmpFolder+'/'+ outputFileName)
+            new fluent_ffmpeg(tmpFolder+'/tmp_'+ outputFileName)
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
             })
             .on('end', function() {
-                console.log("Saved File: Me_" + outputFileName );
+                console.log("Saved File: " + outputFileName );
                 resolve(1);
             })
             .addInput( tmpFolder+"/"+ audioFileName)
             .setDuration(duration)
-            .saveToFile(outputFolder+"/Me_"+outputFileName, "./");
+            .saveToFile(outputFolder+"/"+outputFileName, "./");
         
         });
 
@@ -310,7 +313,7 @@ async function loopVideo( fileName, outputFileName, loops )
         }
         console.log("Compiling Looped Video...")
         return new Promise(function(resolve, reject) {
-            ffmpegCommand.mergeToFile( tmpFolder+'/'+ outputFileName, "./")
+            ffmpegCommand.mergeToFile( tmpFolder+'/tmp_'+ outputFileName, "./")
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
             })
