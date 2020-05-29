@@ -95,7 +95,6 @@ async function processCoubVideo(json, videoLink, audioLink)
     var rawOutputAudioName = videoName +"_coub_"+ permaLink + "_audio";
 
 
-    //operation(function(a){});
 
     await saveLinkToFile( videoLink, rawOutputVideoName + videoExtention );
     await saveLinkToFile( audioLink, rawOutputAudioName + audioExtention );
@@ -163,14 +162,17 @@ async function processCoubVideo(json, videoLink, audioLink)
     console.log("Removing Temp Files...");
 
     try {
+        // remove raw audiofile
         var tempPath = tmpFolder+'/'+ rawOutputAudioName + audioExtention;
         if(fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
         console.log("...Removed Audio File...");
 
+        // remove raw video
         tempPath = tmpFolder+'/'+ rawOutputVideoName + videoExtention;
         if(fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
         console.log("...Removed Raw Video File...");
 
+        // remove looped video
         tempPath = tmpFolder+'/'+ outputVideoName + videoExtention;
         if(fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
         console.log("...Removed Looped Video File...");
@@ -196,11 +198,37 @@ async function parseHtml(page)
     const dom = new JSDOM(page);
     const $ = (require('jquery'))(dom.window);
     
-    var json = $.parseJSON( $("#embed-data-json").html() );
+    var body = $("#embed-data-json").html();
+    while(body == undefined){ await sleep(1000) }
 
-    var jsonVideo = json.file_versions.html5.video;
-    var jsonAudio = json.file_versions.html5.audio;
-    //var videoLink = json.file_versions.html5.video.higher.url;
+    // get json data
+    //var json = $("#embed-data-json").html();
+
+    // Get json data (incomplete json data fix)
+    var in1 = body.indexOf("file_versions") - 1;
+    var in2 = body.indexOf("audio_versions") - 1;
+    var json = body.substring(in1+16, in2-1);
+    
+    json = $.parseJSON(json);
+
+    body = removeWhiteSpace(body);
+
+    in1 = body.indexOf("permalink")-1;
+    in2 = body.indexOf("title") - 1;
+    json.permalink = body.substring(in1+13, in2-2);
+
+    in1 = body.indexOf("visibility_type")-1;
+    json.title = body.substring(in2+9, in1-2);
+
+    //console.log(json.title);
+
+    
+    
+        
+
+
+    var jsonVideo = json.html5.video;
+    var jsonAudio = json.html5.audio;
 
     //console.log("Json: " + JSON.stringify(jsonVideo) );
 
@@ -249,7 +277,6 @@ async function attatchAudio(outputFileName, audioFileName, duration)
                 resolve(1);
             })
             .addInput( tmpFolder+"/"+ audioFileName)
-            //.addInput("./" + audioFileName)
             .setDuration(duration)
             .saveToFile(outputFolder+"/Me_"+outputFileName, "./");
         
@@ -308,7 +335,6 @@ async function getMediaDuration( name )
         
         ffprobe( tmpFolder+'/'+ name , { path: ffprobeStatic.path }, function(err, info) {
             //console.log( "./" + name + " Meta: " + info, streams[0]);
-            //return metadata.format.duration;
             resolve(info.streams[0]);
         })
     });
@@ -319,11 +345,13 @@ async function saveLinkToFile( link, fileName )
     var file = fs.createWriteStream(tmpFolder +'/'+fileName);
 
     return new Promise(function(resolve, reject) {
+
         https.get(link, function(response) {
             response.pipe(file);
-            console.log("Saved File: " + fileName);
+            console.log("Saved Temp File: " + fileName);
             resolve(1);
         });
+
     });
 }
 
@@ -339,10 +367,10 @@ async function downloadCoub(url)
 
     return new Promise(function(resolve, reject) {
         https.get(locUrl, function(res){
+
             console.log("Got response: " + res.statusCode);
             res.on('data', function(chunk){
                 parseHtml(chunk);
-                //console.log(running);
                 resolve(1);
             });
 
@@ -366,8 +394,6 @@ async function downloadCoub(url)
 function checkIfUrlIsValid(url)
 {
     var s = url.split("/");
-    //console.log(s.toString());
-    //console.log(s.length);
     if( 
         s.length == 5       &&
         s[0] == "https:"    &&
@@ -420,6 +446,7 @@ function printHelp()
     console.log("   setFfmpegPath       Set the path to ffmpeg.exe");
     console.log("   setFfprobePath      Set the path to ffprobe.exe");
     console.log("   resetFilePaths      Reset all file paths.")
+    console.log("   saveSettings        Save all setting values.");
     console.log("\nNote:");
     console.log("   Mode:1 may greatly increase video loop count.");
     console.log("   High video loop counts will increase CPU usage.");
@@ -563,8 +590,7 @@ function loadSettings()
     {
         var s = "";
         try {
-            s = fs.readFileSync(settingsFile, 'utf8');
-            //console.log(s.split(','));    
+            s = fs.readFileSync(settingsFile, 'utf8');  
         } catch(e) {
             console.log('Error:', e.stack);
         }
@@ -734,7 +760,6 @@ async function main()
     printHelpDialouge();
     
 
-    //return new Promise(function(resolve, reject) {
     while(running == true)
     {
 
@@ -811,7 +836,6 @@ async function main()
                 break;
 
             default:
-                // "https://coub.com/embed/2e87zp"
                 
                 url = checkIfUrlIsValid(url);
                 if(url=="")
@@ -824,7 +848,6 @@ async function main()
                     await downloadCoub(url);
                     while(downloadComplete == false) { await sleep(1000);}
                     downloadComplete = false;
-                    //console.log(running);
                 }
                     
         }
@@ -833,10 +856,9 @@ async function main()
         
 
     console.log(" ");
-    console.log("Exited Nodejs Coub Video Downloader");
+    console.log("Exited Coub Video Downloader");
     console.log(" ");
-    //resolve();
-    //});
+
 }
 
 
