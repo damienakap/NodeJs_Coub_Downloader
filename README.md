@@ -32,4 +32,6 @@ features:
  - can set the download location for videos
  - settings can be saved
  - TODO: set video/audio quality (currently set to the highest available)
+ - TODO: option to keep the original video and audio files
+ - TODO: set audio offset to fix sync on some videos
         
