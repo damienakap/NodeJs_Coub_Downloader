@@ -1,5 +1,6 @@
 # NodeJs_Coub_Downloader
- A meh coub video downloader
+ A meh coub video downloader.</br>
+ Dowloads videos https://coub.com/ </br>
 
 Depdancies:</br>
 <ul>
