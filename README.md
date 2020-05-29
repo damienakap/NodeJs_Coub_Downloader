@@ -2,16 +2,17 @@
  A meh coub video downloader
 
 Depdancies:
- -nodeJs:
-  -jquery
-  -https
-  -jsdom
-  -fluent-ffmpeg
-  -ffprobe
-  -ffprobe-static
- -downloads
-  -ffprobe.exe
-  -ffmpeg.exe
+ (*nodeJs:
+  *jquery
+  *https
+  *jsdom
+  *fluent-ffmpeg
+  *ffprobe
+  *ffprobe-static)
+ (downloads:
+  *ffprobe.exe
+  *ffmpeg.exe)
+
         
 Usage:
  - run coubDownloader.js ( npm coubDownloader.js )
