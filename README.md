@@ -1,5 +1,6 @@
 # NodeJs_Coub_Downloader
- A meh coub video downloader
+ A meh coub video downloader.</br>
+ Dowloads videos from https://coub.com/ </br>
 
 Depdancies:</br>
 <ul>
@@ -33,9 +34,10 @@ features:
  - settings can be saved
  - TODO: set video/audio quality (currently set to the highest available)
  - TODO: option to keep the original video and audio files
- - TODO: set audio offset to fix sync on some videos
+ - TODO: option to download as gif
+ - TODO: set audio offset (fix sync on some videos)
  - TODO: set output vidio offset (idk why not)
- - TDOD: option to clip either end of the original video to fix desync over time (for slow videos)
- - TODO: option to slow down the original video to fix desync over time (for fast videos)
+ - TODO: option to set speed of the video (fix desync over time)
+ - TDOD: option to clip either end of the original video (fix desync over time) (for slow videos)
  - TODO: option to clip either end of the output video (fix slow to start and no end audio coubs)
         
