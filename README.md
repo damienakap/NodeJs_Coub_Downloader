@@ -23,5 +23,8 @@ Note:
 
 features:
  - can set the output video length by loop count or audio duration
+ - can set the search path of ffmpeg and ffprobe
+ - can set the download location for videos
+ - settings can be saved
  - TODO: set video/audio quality (currently set to the highest available)
         
