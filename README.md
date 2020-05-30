@@ -77,7 +77,34 @@ features:
  - TDOD: option to clip either end of the original video (fix desync over time) (for slow videos)
  - TODO: option to clip either end of the output video (fix slow to start and no end audio coubs)
         
- Commands:
- <ul>
- 
- </ul>
+Commands:
+<pre>
+   exit                Exit Coub Video Downloader
+   setMode             Set download mode
+       mode:0          Limit by max loops
+       mode:1          Limit by audio duration
+   setMaxLoops         Set the max video loops
+   overrideMaxLoops    (enable/disable) Override absolute max loops
+   reset               Reset settings to default.
+   setDownloadFolder   Set folder the save downloaded videos to.
+   setTempFolder       Set folder for temporary files.
+   setFfmpegPath       Set the path to ffmpeg.exe
+   setFfprobePath      Set the path to ffprobe.exe
+   resetFilePaths      Reset all file paths.
+   saveSettings        Save all setting values.
+</pre>
+
+Defaul File Paths:
+<pre>
+   Download Folder:    ./downloads
+   Temp Folder:        ./tmp
+   ffmpeg Path:        ./ffmpeg.exe
+   ffprob Path:        ./ffprobe.exe
+</pre>
+
+
+
+
+
+
+
