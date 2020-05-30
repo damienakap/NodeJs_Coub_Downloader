@@ -9,6 +9,7 @@ echo sLinkFile = "%CD%\NodeJs Coub Downloader.lnk" >> %SCRIPT%
 echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
 echo oLink.TargetPath = "cmd" >> %SCRIPT%
 echo oLink.Arguments = "/C %CD%\run.bat" >> %SCRIPT%
+echo oLink.WorkingDirectory = "%CD%\" >> %SCRIPT%
 echo oLink.Save >> %SCRIPT%
 
 cscript /nologo %SCRIPT%
