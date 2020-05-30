@@ -18,6 +18,16 @@ Depdancies:</br>
  <li>fmpeg.exe</li>
 </ul>
 
+Quick Setup:
+<ul>
+ (Windows)
+ <li>open setup.bat</li>
+ <li>open run.bat</li>
+ <li>type "setFfmpegPath" and enter the directory of ffmpeg.exe</li>
+ <li>type "setFfprobePath" and enter the directory of ffprobe.exe</li>
+ <li>type "saveSettings"</li>
+</ul>
+
 Setup:
 <ul>
  <li>install nodejs  (https://nodejs.org/)</li>
