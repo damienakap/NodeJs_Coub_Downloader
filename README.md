@@ -18,8 +18,15 @@ Depdancies:</br>
  <li>fmpeg.exe</li>
 </ul>
 
-        
+Setup:
+ - install nodejs  (https://nodejs.org/)
+ - install ffmpeg  (https://ffmpeg.org/)
+ - install ffprobe (https://ffmpeg.org/)
+ - go to downloader directory in terminal/powershell ( cd PATH/NodeJs_Coub_Downloader-master )
+ - run npm i
+      
 Usage:
+ - go to downloader directory ( cd PATH/NodeJs_Coub_Downloader-master )
  - run coubDownloader.js ( npm coubDownloader.js )
  - past the video url when prompted
  - type help for additional info
