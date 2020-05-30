@@ -77,3 +77,7 @@ features:
  - TDOD: option to clip either end of the original video (fix desync over time) (for slow videos)
  - TODO: option to clip either end of the output video (fix slow to start and no end audio coubs)
         
+ Commands:
+ <ul>
+ 
+ </ul>
