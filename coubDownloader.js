@@ -120,6 +120,7 @@ async function processCoubVideo(json, videoLink, audioLink)
 
     var videoLoops = Math.ceil(audioInfo.duration/videoInfo.duration);
     
+    maxLoops = Math.max(maxLoops,1);
     if( !overrideMaxLoops)
     {
         maxLoops    = Math.min(maxLoops,absoluteMaxLoops);
@@ -268,16 +269,25 @@ async function parseHtml(page)
 
 async function attatchAudio(outputFileName, audioFileName, duration)
 {
-    console.log(" ");
+    //console.log(" ");
     try {
+        var temp = 0.0;
         return new Promise(function(resolve, reject) {
             new fluent_ffmpeg(tmpFolder+'/tmp_'+ outputFileName)
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
             })
             .on('end', function() {
+                printProgress("Processing: 100%");
+                console.log('\n\n');
                 console.log("Saved File: " + outputFileName );
                 resolve(1);
+            })
+            .on('progress', function(progress) {
+                //console.log();
+                temp = progress.percent;
+                temp = Math.max(0.0,temp).toFixed(2);
+                printProgress('Processing: ' + temp + '%');
             })
             .addInput( tmpFolder+"/"+ audioFileName)
             .setDuration(duration)
@@ -311,13 +321,24 @@ async function loopVideo( fileName, outputFileName, loops )
             .mergeAdd(tmpFolder+'/'+ fileName);
             console.log("Added Loop Video: (" +(i+1)+"/"+loops+")");
         }
-        console.log("Compiling Looped Video...")
+
+
+        console.log("\nCompiling Looped Video...")
+        var temp = 0.0;
         return new Promise(function(resolve, reject) {
             ffmpegCommand.mergeToFile( tmpFolder+'/tmp_'+ outputFileName, "./")
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
             })
+            .on('progress', function(progress) {
+                //console.log();
+                temp = (progress.percent/loops);
+                temp = Math.max(0.0,temp).toFixed(2);
+                printProgress('Processing: ' + temp + '%');
+            })
             .on('end', function() {
+                printProgress("Processing: 100%");
+                console.log('\n\n');
                 ffmpegCommand.setMaxListeners(4);
                 resolve(1);
             });
@@ -331,6 +352,12 @@ async function loopVideo( fileName, outputFileName, loops )
     
 }
 
+function printProgress(m)
+{
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    process.stdout.write(m);
+}
 
 async function getMediaDuration( name )
 {
@@ -528,9 +555,9 @@ function setMaxLoops(s)
         console.log("Max Loops: "+maxLoops);
         return;
     }
-    if( x<0 )
+    if( x<1 )
     {
-        console.log("\n\nInput was negative");
+        console.log("\n\nInput value too low");
         console.log("Max Loops: "+maxLoops);
         return;
     }
@@ -646,9 +673,10 @@ function loadSettings()
                 }else{
                     if( temp>absoluteMaxLoops && !overrideMaxLoops )
                     {
-                        maxLoops = absoluteMaxLoops;
+                        temp = absoluteMaxLoops;
                         updateFile = true;
                     }
+                    temp = Math.max(1,temp);
                     maxLoops = temp;
                 }
             }
