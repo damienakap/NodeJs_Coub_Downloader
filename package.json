@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/damienakap/NodeJs_Coub_Downloader#readme",
   "dependencies": {
+    "ffprobe": "^1.1.0",
+    "ffprobe-static": "^3.0.0",
     "fluent-ffmpeg": "^2.1.2",
-    "https": "^1.0.0"
+    "https": "^1.0.0",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.2.2"
   }
 }
