@@ -19,11 +19,30 @@ Depdancies:</br>
 </ul>
 
 Setup:
- - install nodejs  (https://nodejs.org/)
- - install ffmpeg  (https://ffmpeg.org/)
- - install ffprobe (https://ffmpeg.org/)
- - go to downloader directory in terminal/powershell ( cd PATH/NodeJs_Coub_Downloader-master )
- - run npm i
+<ul>
+ <li>install nodejs  (https://nodejs.org/)</li>
+ <li>install ffmpeg  (https://ffmpeg.org/)</li>
+ <li>install ffprobe (https://ffmpeg.org/)</li>
+ <li>go to downloader directory in terminal/powershell ( cd PATH/NodeJs_Coub_Downloader-master )</li>
+ <li>run npm i (or run setup.bat)</li>
+ <li>setup ffprobe and ffmpeg directories</li>
+ <li>option 1:</li>
+ <li><ul>
+  <li>go to downloader directory ( cd PATH/NodeJs_Coub_Downloader-master )</li>
+  <li>run coubDownloader.js ( npm coubDownloader.js )</li>
+ </ul></li>
+ <li>option 2:</li>
+ <li><ul>
+  <li>open run.bat</li>
+ </ul></li>
+ <li>With the coub downloader running:</li>
+ <li><ul>
+  <li>type "setFfmpegPath" and enter the directory of ffmpeg.exe</li>
+  <li>type "setFfprobePath" and enter the directory of ffprobe.exe</li>
+  <li>type "saveSettings"</li>
+ </ul></li>
+</ul>
+ 
       
 Usage:
  - go to downloader directory ( cd PATH/NodeJs_Coub_Downloader-master )
