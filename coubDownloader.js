@@ -84,6 +84,9 @@ async function processCoubVideo(json, videoLink, audioLink)
         .split("|").join("-")
         .split("%").join("")
         .split(":").join("-")
+        .split("\'").join("")
+        .split("\"").join("_")
+        .split("\*").join("")
         ;
     videoName  = cleanString(videoName);
     //videoName.replace(/[/\\?%*:|"<>]/g, '-')
