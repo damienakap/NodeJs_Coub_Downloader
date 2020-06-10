@@ -102,7 +102,7 @@ async function processCoubVideo(json, videoLink, audioLink)
     await saveLinkToFile( videoLink, rawOutputVideoName + videoExtention );
     await saveLinkToFile( audioLink, rawOutputAudioName + audioExtention );
 
-
+    //await sleep(1000);
 
     console.log(" ");
     console.log(" ");
@@ -363,9 +363,12 @@ async function getMediaDuration( name )
 {
     return new Promise(function(resolve, reject) {
         
-        ffprobe( tmpFolder+'/'+ name , { path: ffprobeStatic.path }, function(err, info) {
-            //console.log( "./" + name + " Meta: " + info, streams[0]);
+        fluent_ffmpeg.ffprobe( tmpFolder+'/'+ name , { path: ffprobeStatic.path }, function(err, info) {
+            //console.log( "./" + name + " Meta: ");
+            //console.log(info.streams[0]);
             resolve(info.streams[0]);
+            //console.log(info.format);
+            //resolve(info.format);
         })
     });
 }
@@ -377,9 +380,13 @@ async function saveLinkToFile( link, fileName )
     return new Promise(function(resolve, reject) {
 
         https.get(link, function(response) {
-            response.pipe(file);
-            console.log("Saved Temp File: " + fileName);
-            resolve(1);
+            response
+            .on('end',function(){
+                console.log("Saved Temp File: " + fileName);
+                resolve(1);
+            })
+            .pipe(file);
+            
         });
 
     });
